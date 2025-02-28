@@ -9,5 +9,6 @@ module.exports = defineConfig({
     chromeWebSecurity: false,
     video: true,
     experimentalWebKitSupport: true,
+    fixturesFolder: false
   },
 });

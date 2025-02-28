@@ -5,13 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "cypress open",
-    "mobile": "cypress open --config viewportWidth=410 viewportHeight=860",
     "test": "cypress run",
-    "test:mobile": "cypress run --config viewportWidth=410 viewportHeight=860",
     "test:api": "cypress run --spec 'cypress/e2e/tests/api'",
-    "test:compatibilidade": "cypress run --spec 'cypress/e2e/tests/compatibilidade'",
-    "test:funcional": "cypress run --spec 'cypress/e2e/tests/funcional'",
-    "test:webkit": "cypress run --browser webkit"
+    "test:funcional": "cypress run --spec 'cypress/e2e/tests/funcional'"
   },
   "keywords": [],
   "author": "Moisés Costa <mosolicos@gmail.com>",
@@ -27,7 +23,6 @@
     "@faker-js/faker": "^8.4.1",
     "eslint": "^9.2.0",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-cypress": "^3.2.0",
-    "playwright-webkit": "^1.44.0"
+    "eslint-plugin-cypress": "^3.2.0"
   }
 }
