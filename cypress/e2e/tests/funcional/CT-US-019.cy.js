@@ -1,19 +1,27 @@
-import LoginPage from '../../../pages/loginPage';
-import DashboardPage from '../../../pages/dashboardPage';
+import { faker } from '@faker-js/faker'
 
-const loginPage = new LoginPage()
-const dashboardPage = new DashboardPage()
+const email = faker.internet.email()
 
-describe('CT-US-017 | Atalho para documentos', function(){
+describe('CT-US-019 | Atalho para documentos', function(){
   beforeEach(() => {
-    //Acessa a página de "Login"
-    loginPage.accessLoginPage()
+    //Acessa a página de "Cadastro"
+    cy.visit('/login')
   })
 
-  it('Cenário 01: Diagrama adicionado com sucesso', () => {
+  it('Preparo do CT-US-019', () => {
+    cy.novo_cadastro(email)
+    cy.login_teste(email, Cypress.env('USER_PASSWORD'))
+    cy.get('#btn-new').click()
+  })
+
+  it('Cenário 01: Diagrama adicionado com sucesso.', () => {
     //Faz o login
-    loginPage.loginSuccess(Cypress.env('USER_EMAIL'), Cypress.env('USER_PASSWORD'))
-    
-    dashboardPage.favoriteDiagram()
+    cy.login_teste(email, Cypress.env('USER_PASSWORD'))
+    //Acessa a página de "Documentos"
+    cy.documentos_teste()
+  
+    //Favorita o diagrama
+    cy.get(':nth-child(1) > #diagram-card > .card-header > .dropdown > .p-0 > img').click()
+    cy.get('.swal2-popup').should('contain', 'Diagrama adicionado aos meus favoritos')
   })
 });

@@ -1,23 +1,30 @@
-import LoginPage from '../../../pages/loginPage';
-import DashboardPage from '../../../pages/dashboardPage';
-import DiagramEditionPage from '../../../pages/diagramEditionPage';
+import { faker } from '@faker-js/faker'
 
-const loginPage = new LoginPage()
-const dashboardPage = new DashboardPage()
-const diagramEditionPage = new DiagramEditionPage()
+const email = faker.internet.email()
 
 describe('CT-US-005 | Desfazer alterações', function(){
   beforeEach(() => {
     //Acessa a página de "Login"
-    loginPage.accessLoginPage()
+    cy.visit('/login')
+  })
+
+  it('Preparo do CT-US-005', () => {
+    cy.novo_cadastro(email)
   })
 
   it('Cenário 01: Desfazer erros feitos no diagrama', () => {
     //Faz o login
-    loginPage.loginSuccess(Cypress.env('USER_EMAIL'), Cypress.env('USER_PASSWORD'))
+    cy.login_teste(email, Cypress.env('USER_PASSWORD'))
 
-    dashboardPage.accessExistingDiagram()
-    diagramEditionPage.makeChangesOnDiagram()
-    diagramEditionPage.undoChanges()
+    //Acessa a página de "Documentos"
+    cy.documentos_teste()
+    cy.get('#btn-new').click()
+        
+    cy.alterarDiagramas_teste()
+
+    cy.get('#graph > svg > :nth-child(1) > :nth-child(2) > g > ellipse').click()
+    cy.get('#delete').click()
+
+    cy.get('#undo > img').click()
   })
 });
